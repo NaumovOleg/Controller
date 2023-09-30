@@ -42,7 +42,7 @@ void i2c_read_reg_to_buf(uint8_t add, uint8_t reg, uint8_t *buf, uint8_t size);
     #define ACC_1G 255
   #else
     #define ACC_1G 512
-  #endif
+  #endif 
 #endif
 #if !defined(ACC_1G)
   #define ACC_1G 256
@@ -57,6 +57,11 @@ void i2c_read_reg_to_buf(uint8_t add, uint8_t reg, uint8_t *buf, uint8_t size);
 #if defined(MPU6050) || defined(MPU3050)
   #define GYRO_SCALE (4 / 16.4 * PI / 180.0 / 1000000.0) //16.4 LSB = 1 deg/s
 #endif
+
+#if defined(MPU9250) || defined(MPU3050)
+  #define GYRO_SCALE (4 / 16.4 * PI / 180.0 / 1000000.0) //16.4 LSB = 1 deg/s
+#endif
+
 #if defined(ITG3200)
   #define GYRO_SCALE (4 / 14.375 * PI / 180.0 / 1000000.0) //ITG3200   14.375 LSB = 1 deg/s
 #endif

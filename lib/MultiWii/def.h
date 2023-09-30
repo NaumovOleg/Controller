@@ -1648,19 +1648,19 @@
   #define ACC 0
 #endif
 
-#if defined(HMC5883) || defined(HMC5843) || defined(AK8975) || defined(MAG3110)
+#if defined(QMC5883) || defined(MMC5883) || defined(HMC5883) || defined(HMC5843) || defined(AK8975) || defined(MAG3110) || defined(AK8963)
   #define MAG 1
 #else
   #define MAG 0
 #endif
 
-#if defined(ITG3200) || defined(ITG3050) || defined(L3G4200D) || defined(MPU6050) || defined(LSM330) || defined(MPU3050) || defined(WMP)
+#if defined(ITG3200) || defined(ITG3050) || defined(L3G4200D) || defined(MPU6050) || defined(LSM330) || defined(MPU3050) || defined(WMP) 
   #define GYRO 1
 #else
   #define GYRO 0
 #endif
 
-#if defined(BMP085) || defined(MS561101BA)
+#if defined(BMP085) || defined(BMP280) || defined(MS561101BA)
   #define BARO 1
 #else
   #define BARO 0
