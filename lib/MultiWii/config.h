@@ -99,7 +99,7 @@
       //#define FREEIMUv035_BMP // FreeIMU v0.3.5_BMP
       //#define FREEIMUv04      // FreeIMU v0.4 with MPU6050, HMC5883L, MS561101BA                  <- confirmed by Alex
       //#define FREEIMUv043     // same as FREEIMUv04 with final MPU6050 (with the right ACC scale)
-      #define NANOWII         // the smallest multiwii FC based on MPU6050 + pro micro based proc <- confirmed by Alex
+       #define NANOWII         // the smallest multiwii FC based on MPU6050 + pro micro based proc <- confirmed by Alex
       //#define PIPO            // 9DOF board from erazz
       //#define QUADRINO        // full FC board 9DOF+baro board from witespy  with BMP085 baro     <- confirmed by Alex
       //#define QUADRINO_ZOOM   // full FC board 9DOF+baro board from witespy  second edition
@@ -127,7 +127,7 @@
       //#define CRIUS_SE        // Crius MultiWii SE
       //#define CRIUS_SE_v2_0   // Crius MultiWii SE 2.0 with MPU6050, HMC5883 and BMP085
       //#define OPENLRSv2MULTI  // OpenLRS v2 Multi Rc Receiver board including ITG3205 and ADXL345
-      //#define BOARD_PROTO_1   // with MPU6050 + HMC5883L + MS baro
+      // #define BOARD_PROTO_1   // with MPU6050 + HMC5883L + MS baro
       //#define BOARD_PROTO_2   // with MPU6050 + slave  MAG3110 + MS baro
       //#define GY_80           // Chinese 10 DOF with  L3G4200D ADXL345 HMC5883L BMP085, LLC
       //#define GY_85           // Chinese 9 DOF with  ITG3205 ADXL345 HMC5883L LLC
@@ -183,14 +183,14 @@
 
       /* I2C barometer */
       // #define BMP085
-      #define BMP280
+       #define BMP280
       //#define MS561101BA
       
 
       /* I2C magnetometer */
       //#define HMC5843
-      // #define HMC5883
-      #define QMC5883
+      //  #define HMC5883
+        #define QMC5883
       // #define MMC5883
       //#define AK8975
       //#define AK8963
@@ -206,10 +206,10 @@
       //#define ADCACC
 
       /* enforce your individual sensor orientation - even overrides board specific defaults */
-      #define FORCE_ACC_ORIENTATION(X, Y, Z)  {imu.accADC[ROLL]  =  -X; imu.accADC[PITCH]  = -Y; imu.accADC[YAW]  = Z;}
-      #define FORCE_GYRO_ORIENTATION(X, Y, Z) {imu.gyroADC[ROLL] = Y; imu.gyroADC[PITCH] =  -X; imu.gyroADC[YAW] = -Z;}
-      //for those with inverted Mag sensors YAW invert option
-      #define FORCE_MAG_ORIENTATION(X, Y, Z)  {imu.magADC[ROLL]  =  -X; imu.magADC[PITCH]  =  -Y; imu.magADC[YAW]  = Z;}
+      #define ACC_ORIENTATION(X, Y, Z)  {imu.accADC[ROLL]  = Y; imu.accADC[PITCH]  =  X; imu.accADC[YAW]  =  Z;}
+      #define GYRO_ORIENTATION(X, Y, Z) {imu.gyroADC[ROLL] = X; imu.gyroADC[PITCH] = Y; imu.gyroADC[YAW] = Z;}
+      // //for those with inverted Mag sensors YAW invert option
+      #define FORCE_MAG_ORIENTATION(X, Y, Z)  {imu.magADC[ROLL]  =  Y; imu.magADC[PITCH]  =  -X; imu.magADC[YAW]  = -Z;}
       //#define FORCE_MAG_ORIENTATION(X, Y, Z)  {imu.magADC[ROLL]  =  X; imu.magADC[PITCH]  =  Y; imu.magADC[YAW]  = Z;}
       //#define FORCE_MAG_ORIENTATION(X, Y, Z)  {imu.magADC[ROLL]  =  -X; imu.magADC[PITCH]  =  Y; imu.magADC[YAW]  = -Z;}
        
