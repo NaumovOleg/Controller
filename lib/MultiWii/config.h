@@ -366,7 +366,7 @@ At this moment you can use this function only with WinGUI 2.3 release. MultiWiiC
   /********                       special receiver types             ********************/
   /**************************************************************************************/
 
-    /****************************    PPM Sum Reciver    ***********************************/
+    /****************************              Sum Reciver    ***********************************/
       /* The following lines apply only for specific receiver with only one PPM sum signal, on digital PIN 2
          Select the right line depending on your radio brand. Feel free to modify the order in your PPM order is different */
       //#define SERIAL_SUM_PPM         PITCH,YAW,THROTTLE,ROLL,AUX1,AUX2,AUX3,AUX4,8,9,10,11 //For Graupner/Spektrum
