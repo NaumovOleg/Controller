@@ -268,7 +268,7 @@
   /***********************          Cam Stabilisation             ***********************/
     /* The following lines apply only for a pitch/roll tilt stabilization system. Uncomment the first or second line to activate it */
     //#define SERVO_MIX_TILT
-    #define SERVO_TILT
+    // #define SERVO_TILT
 
     /* camera trigger function : activated via Rc Options in the GUI, servo output=A2 on promini */
     // trigger interval can be changed via (*GUI*) or via AUX channel
@@ -509,7 +509,7 @@ At this moment you can use this function only with WinGUI 2.3 release. MultiWiiC
     #define SERIAL0_COM_SPEED 115200
     #define SERIAL1_COM_SPEED 115200
     #define SERIAL2_COM_SPEED 115200
-    #define SERIAL3_COM_SPEED 38400
+    #define SERIAL3_COM_SPEED 115200
     //#define SERIAL3_COM_SPEED 115200
     //Serial 1 Bluetooth Serial 2 GPS Serial 3 Telemetry
 
