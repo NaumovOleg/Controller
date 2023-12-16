@@ -482,7 +482,6 @@ uint8_t Baro_update() {                   // first UT conversion is started in i
 #if defined(BMP280)
 
 #define BMP280_ADDR  0x76 
-//#define BMP280_ADDR  0x77 
 #define i2c_read(ack)  (ack) ? i2c_readAck() : i2c_readNak(); 
 
 #define BMP280_CAL_REG_FIRST  0x88
@@ -562,7 +561,9 @@ void bmp280_set_config(uint8_t t_sb, uint8_t filter, uint8_t spi3w_en)
 void bmp280_measure(void)
 {
   uint8_t data[BMP280_RAWDATA_BYTES];
-  int32_t temp_raw, pres_raw, var1, var2, t_fine;
+  int32_t temp_raw, pres_raw, t_fine;
+  int64_t var1, var2;
+
   i2c_read_reg_to_buf(BMP280_ADDR, BMP280_PRES_REG, data, BMP280_RAWDATA_BYTES);
   pres_raw = bmp280_24bit_reg(data[0], data[1], data[2]);
   temp_raw = bmp280_24bit_reg(data[3], data[4], data[5]);
@@ -579,7 +580,9 @@ void bmp280_measure(void)
 
   t_fine = var1 + var2;
 
+  //baroTemperature = (t_fine * 5 + 128) >> 8;
   baroTemperature = (t_fine * 5 + 128) >> 8;
+
 
   var1 = ((int64_t)t_fine) - 128000;
   var2 = var1 * var1 * (int64_t)bmp280_cal.dig_p6;
@@ -1294,7 +1297,6 @@ static void Device_Mag_getADC() {
 
 void Mag_init() {
 i2c_writeReg(MAG_ADDRESS,MMC5883MA_PRODUCT_ID,0x00);
-
  
 i2c_writeReg(MAG_ADDRESS,MMC5883MA_INTERNAL_CONTROL_2,0x01);// Magnetometer continuous frequency settings
  // MMC5883_CMFREQ_ONESHOT = 0x00,    // One shot mode
@@ -1309,7 +1311,7 @@ i2c_writeReg(MAG_ADDRESS,MMC5883MA_INTERNAL_CONTROL_2,0x01);// Magnetometer cont
  // MMC5883_CMFREQ_0_003125HZ = 0x09, // Continuous 1/32 Hz
  // MMC5883_CMFREQ_0_015625HZ = 0x0A, // Continuous 1/16 Hz
 
- i2c_writeReg(MAG_ADDRESS,MMC5883MA_INTERNAL_CONTROL_1,0x03);
+i2c_writeReg(MAG_ADDRESS,MMC5883MA_INTERNAL_CONTROL_1,0x03);
  //0x00 16bits 10ms 100Hz 
  //0x01 16bits 5ms 200Hz 
  //0x02 16bits 2.5ms 400Hz 
@@ -1324,31 +1326,15 @@ i2c_writeReg(MAG_ADDRESS,MMC5883MA_INTERNAL_CONTROL_0,0x01);
 //0 Reserved
 //1 OTP Read
 //0 Test_Pin_Sel
-
-
-
-
 }
 
-  // Adafruit compatible 10DOF 9-Axis MMC5883MA
-  //void Device_Mag_getADC() {
-  // i2c_getSixRawADC(MAG_ADDRESS,MAG_DATA_REGISTER);
-  //  MAG_ORIENTATION( ((rawADC[1]<<10)   | rawADC[0]),          
-  //                   ((rawADC[3]<<10)   | rawADC[2]),     
-  //                   ((rawADC[5]<<10)   | rawADC[4]));
-  //                  }
 
-
-  // Others
- void Device_Mag_getADC() {
-  i2c_getSixRawADC(MAG_ADDRESS,MAG_DATA_REGISTER);
-  MAG_ORIENTATION( ((rawADC[1]<<10)   | rawADC[0]*4),          
-                   ((rawADC[3]<<10)   | rawADC[2]*4),     
-                   ((rawADC[5]<<10)   | rawADC[4]*4));
-                 }
-
-
-
+  void Device_Mag_getADC() {
+    i2c_getSixRawADC(MAG_ADDRESS,MAG_DATA_REGISTER);
+    MAG_ORIENTATION( ((rawADC[1]<<10)   | rawADC[0])/4,          
+                     ((rawADC[3]<<10)   | rawADC[2])/4,     
+                     ((rawADC[5]<<10)   | rawADC[4])/4);
+                     }
 
 #endif
 // ************************************************************************************************************
@@ -1525,9 +1511,9 @@ void ACC_getADC () {
                          ((rawADC[5]<<8) | rawADC[4]) );
       #endif
       #if defined (MMC5883)  
-        MAG_ORIENTATION( ((rawADC[1]<<10) | rawADC[0]) ,
-                         ((rawADC[3]<<10) | rawADC[2]) ,
-                         ((rawADC[5]<<10) | rawADC[4]) );
+        MAG_ORIENTATION( ((rawADC[1]<<8) | rawADC[0]) ,
+                         ((rawADC[3]<<8) | rawADC[2]) ,
+                         ((rawADC[5]<<8) | rawADC[4]) );
                          
       #endif
       #if defined (MAG3110)
